@@ -4,8 +4,9 @@
   "description": "Octopalm Graphql Api",
   "main": "server.js",
   "scripts": {
-	"start": "nodemon --exec babel-node server.js",
-    "test": "tape tests/*.test.js | tap-spec"
+    "start": "nodemon --exec babel-node server.js",
+	"test": "tape ./tests/*.test.js | tap-spec",
+	"cover": "istanbul cover tape ./tests/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "faker": "^4.1.0",
+    "istanbul": "^0.4.5",
     "mongoose-seed": "^0.3.2",
     "nodemon": "^1.12.0",
     "supertest": "^3.0.0",
