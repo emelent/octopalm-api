@@ -1,5 +1,5 @@
 # OctoPalm GraphQL API
-Graphql backend for vertical soup web app.
+Graphql backend for octopalm client web app.
 
 ### Issues:
 
