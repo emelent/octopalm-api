@@ -1,4 +1,4 @@
-# Vertical Soup API
+# OctoPalm GraphQL API
 Graphql backend for vertical soup web app.
 
 ### Issues:
