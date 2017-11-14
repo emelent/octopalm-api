@@ -43,13 +43,18 @@ const makeRouter = (db, User) => {
 
 	router.post(`/register`, async (req, res) => {
 		req.body.password = hashPassword(req.body.password)
-		const user = await new User(req.body).save()
-		if(!user)
-			return fail(res, 401, `Hmmm... what are you trying to do?`)
-		const _id = user._id.toString()
-		const ua = req.get(`user-agent`)
 		
-		res.json(newToken(_id, ua))
+		try{
+			const user = await new User(req.body).save()
+			if(!user)
+				return fail(res, 401, `Hmmm... what are you trying to do?`)
+			const _id = user._id.toString()
+			const ua = req.get(`user-agent`)
+			
+			res.json(newToken(_id, ua))
+		}catch(e){
+			return fail(res, 401, `Duplicate student number.`)
+		}
 	})
 
 	router.all(`/refresh`, async (req, res) => {
