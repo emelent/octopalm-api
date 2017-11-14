@@ -1,6 +1,6 @@
 const express = require(`express`)
 const bodyParser = require(`body-parser`)
-const {createToken, validateToken, hashPassword, inflateId} = require(`./utils`)
+const {createToken, validateToken, hashPassword, inflateId} = require(`../utils`)
 
 const tokenDuration = `2d`
 
