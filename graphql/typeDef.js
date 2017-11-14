@@ -1,4 +1,4 @@
-//GraphQL Schema
+//GraphQL Type Definitions
 
 module.exports = `
 type Module {

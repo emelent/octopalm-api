@@ -3,10 +3,10 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const {graphiqlExpress, graphqlExpress} = require('apollo-server-express')
 const {makeExecutableSchema} = require('graphql-tools')
-const {dbUrl} = require('./globals')
+const {dbUrl} = require('./constants')
 
-const typeDefs = require('./schema')
-const resolvers = require('./resolvers')
+const typeDefs = require('./graphql/typeDef')
+const resolvers = require('./graphql/resolvers')
 const models = require('./models')
 
 const schema = makeExecutableSchema({
@@ -24,7 +24,7 @@ const port = 5000
 const db = mongoose.connection
 
 //create authentication router
-const authRouter = require('./auth')(db, models.User)
+const authRouter = require('./routers/auth')(db, models.User)
 //attach authentication router
 app.use('/auth',  authRouter)
 

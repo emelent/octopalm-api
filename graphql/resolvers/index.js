@@ -2,7 +2,7 @@ const {
 	GraphQLError
 } = require('graphql')
 const ObjectId = require('mongoose').Types.ObjectId
-const {validateToken, inflateId, isHex, hashPassword} = require('./utils')
+const {validateToken, inflateId, isHex, hashPassword} = require('../../utils')
 
 
 //=========================
