@@ -24,7 +24,7 @@ const port = 5000
 const db = mongoose.connection
 
 //create authentication router
-const authRouter = require('./auth')(db, models.User)
+const authRouter = require('./routers/auth')(db, models.User)
 //attach authentication router
 app.use('/auth',  authRouter)
 
