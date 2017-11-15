@@ -62,12 +62,12 @@ export default {
 					return args.events.indexOf(id) > -1 && x.module_id
 				}).map(x => x.module_id.toString())
 
-				//redo this with reducer
 				const moduleSet = new Set(modules)
 				timetable.modules = setToArray(moduleSet).map(x => inflateId(x))
 			}
 			if (args.alias) {
 				//update user's alias for timetable
+				//requires user id
 			}
 
 			return timetable.save().then(x => gqlTimetable(x))
