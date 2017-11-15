@@ -1,34 +1,11 @@
-const express = require(`express`)
-const bodyParser = require(`body-parser`)
-const {createToken, validateToken, hashPassword, inflateId} = require(`../utils`)
+import express from 'express'
+import {createApiToken, createToken, validateToken, hashPassword, inflateId} from '../utils'
 
-const tokenDuration = `2d`
 
 const fail = (res, code, msg) => res.status(code).json(msg)
 
-/**
- * Creates a new json webt token with the expiray date set to the value
- * in the expiresIn constant.
- *  
- * @param {String} _id 		- User Id string
- * @param {String} ua		- User agent string
- * 
- * @return {Object}
- */
-const newToken = (_id, ua, expiresIn=tokenDuration) => ({token: createToken({_id, ua}, {expiresIn})})
-
-/**
- * 
- * @param {mongoose.Connection} db 	- Mongoose database connection
- * @param {mongoose.User} User 		- User mongoose schema
- * 
- * @return express.Router
- */
-const makeRouter = (db, User) => {
+const makeRouter = ({User}) => {
 	const router = express.Router()
-
-	router.use(bodyParser.json())
-
 	router.post(`/token`, async (req, res) => {
 		if(!req.body.password || !req.body.student_id)
 			return fail(res, 422, `No password or student_id provided.`)
@@ -38,7 +15,7 @@ const makeRouter = (db, User) => {
 			fail(res, 403, `Invalid login credentials.`)
 		const _id = user._id.toString()
 		const ua = req.get(`user-agent`)
-		res.json(newToken(_id, ua))
+		res.json(createApiToken(_id, ua))
 	})
 
 	router.post(`/register`, async (req, res) => {
@@ -51,7 +28,7 @@ const makeRouter = (db, User) => {
 			const _id = user._id.toString()
 			const ua = req.get(`user-agent`)
 			
-			res.json(newToken(_id, ua))
+			res.json(createApiToken(_id, ua))
 		}catch(e){
 			return fail(res, 401, `Duplicate student number.`)
 		}
@@ -80,11 +57,11 @@ const makeRouter = (db, User) => {
 		delete payload.nbf
 		delete payload.jti 
 
-		res.json(newToken(payload._id, ua))
+		res.json(createApiToken(payload._id, ua))
 	})	
 
 	return router
 }
 
 
-module.exports = makeRouter
+export default makeRouter

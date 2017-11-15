@@ -1,10 +1,11 @@
-const jwt = require('jsonwebtoken')
-const fs = require('fs')
-const hash = require('jshashes')
+import jwt from 'jsonwebtoken'
+import fs from 'fs'
+import hash from 'jshashes'
 const {ObjectId} = require('mongoose').Types
 
-//hashing algorithm
+
 const alg = new hash.SHA256
+const tokenDuration = '2d'
 
 //private and public key streams
 const privateCert = fs.readFileSync('key.pem')
@@ -18,7 +19,7 @@ const publicCert = fs.readFileSync('cert.pem')
  * 
  * @return {String}
  */
-const createToken = (payload, options) => 
+export const createToken = (payload, options) => 
 	jwt.sign(payload, privateCert, { algorithm: 'RS256'}, options)
 
 /**
@@ -30,7 +31,7 @@ const createToken = (payload, options) =>
  * 
  * @return {Object | null}
  */
-const validateToken = (token, options) => {
+export const validateToken = (token, options) => {
 	try{
 		return jwt.verify(token, publicCert, options)
 	}catch(e){
@@ -43,7 +44,7 @@ const validateToken = (token, options) => {
  * Hash a password.
  * @param {String} password 	- Raw password to be hashed.
  */
-const hashPassword = password => alg.hex(password)
+export const hashPassword = password => alg.hex(password)
 
 /**
  * Creates a mongoose ObjectId from hex string.
@@ -51,7 +52,7 @@ const hashPassword = password => alg.hex(password)
  * 
  * @return ObjectId
  */
-const inflateId = id => ObjectId.createFromHexString(id)
+export const inflateId = id => ObjectId.createFromHexString(id)
 
 /**
  * Checks if given value is a 24 character hex.
@@ -59,16 +60,19 @@ const inflateId = id => ObjectId.createFromHexString(id)
  * 
  * @return {bool}
  */
-const isHex = val => {
+export const isHex = val => {
 	const reg = new RegExp(/^[0-9a-f]{24}$/i)
 	return reg.test(val)
 }
 
 
-module.exports = {
-	createToken,
-	validateToken,
-	hashPassword,
-	inflateId,
-	isHex
-}
+/**
+ * Creates a new json webt token with the expiray date set to the value
+ * in the expiresIn constant.
+ *  
+ * @param {String} _id 		- User Id string
+ * @param {String} ua		- User agent string
+ * 
+ * @return {Object}
+ */
+export const createApiToken = (_id, ua, expiresIn=tokenDuration) => ({token: createToken({_id, ua}, {expiresIn})})

@@ -1,6 +1,6 @@
 //GraphQL Type Definitions
 
-module.exports = `
+export default `
 type Module {
 	_id: ID!
 	name: String!

@@ -1,32 +1,19 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const {graphiqlExpress, graphqlExpress} = require('apollo-server-express')
-const {makeExecutableSchema} = require('graphql-tools')
-const {dbUrl} = require('./constants')
+import express from 'express'
+import {graphiqlExpress} from 'apollo-server-express'
+import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
 
-const typeDefs = require('./graphql/typeDef')
-const resolvers = require('./graphql/resolvers')
-const models = require('./models')
+import {dbUrl, port} from './constants'
+import models from './models'
+import makeAuthRouter from './routers/auth'
+import makeGraphqlRouter from './routers/graphql'
 
-const schema = makeExecutableSchema({
-	typeDefs,
-	resolvers
-})
 
 //set mongoose to return standard Javascript Promises instead of Mongoose promises
 //so we can use await/async stuff.
 mongoose.Promise =  global.Promise
 mongoose.connect(dbUrl, {useMongoClient: true})
 
-const app = express()
-const port = 5000
-const db = mongoose.connection
-
-//create authentication router
-const authRouter = require('./routers/auth')(db, models.User)
-//attach authentication router
-app.use('/auth',  authRouter)
 
 //cors middleware
 const cors = (req, res, next) => {
@@ -39,18 +26,18 @@ const cors = (req, res, next) => {
 		next()
 }
 
+const app = express()
 app.use(cors)
+app.use(bodyParser.json())
+
+//attach authentication router
+app.use('/auth', makeAuthRouter(models))
+
 //attach graphql router
-app.use('/graphql', 
-	bodyParser.json(), 
-	graphqlExpress(req => ({
-		schema, 
-		context: {...models, req}
-	}))
-)
+app.use('/graphql', makeGraphqlRouter(models))
 
 //attach graphiql
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
 
 app.listen(port, () => {

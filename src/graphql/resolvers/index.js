@@ -12,20 +12,20 @@ const resolvers = [
 	timetables
 ]
 
-const createMutation = resolvers => resolvers.reduce(
+const makeMutation = resolvers => resolvers.reduce(
 	(mutations, {Mutation}) => ({...mutations, ...Mutation}),
 	{}
 )
 
-const createQuery = resolvers => resolvers.reduce(
+const makeQuery = resolvers => resolvers.reduce(
 	(queries, {Query}) => ({...queries, ...Query}),
 	{}
 )
 
 
 const rootResolver = {
-	Query: createQuery(resolvers),
-	Mutation: createMutation(resolvers)
+	Query: makeQuery(resolvers),
+	Mutation: makeMutation(resolvers)
 }
 
 export default rootResolver
