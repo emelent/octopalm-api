@@ -7,11 +7,11 @@ const ObjectId = require('mongoose').Types.ObjectId
 export default {
 	Query: {
 		user: async(parent, args, {User}) => {
-			const x = await User.findOne(args).exec()
+			const x = await User.findOne(args)
 			return gqlUser(x)
 		},
 		users: async(parent, args, {User}) => {
-			const users = await User.find().exec()
+			const users = await User.find()
 			return users.map(x => gqlUser(x))
 		},
 	},
@@ -20,7 +20,7 @@ export default {
 		updateUser: async (parent, args, {User}) => {
 			//check if user is admin or owner
 			const {_id, modules, timetables, name, group} = args
-			const x = await User.findById(inflateId(_id)).exec()
+			const x = await User.findById(inflateId(_id))
 			if(modules){
 				x.modules = modules.map(x => inflateId(x))
 			}
@@ -39,7 +39,7 @@ export default {
 		updatePassword: async (parent, args, {User}) => {
 			const _id = inflateId(args._id)
 			const hash = hashPassword(args.password)
-			const user = await User.findById(_id).exec()
+			const user = await User.findById(_id)
 
 			if(user.password !== hash)
 				return GraphQLError("Invalid password.")
@@ -49,7 +49,7 @@ export default {
 		},
 		deleteUser: async (parent, args, {User}) => {
 			const _id = ObjectId.createFromHexString(args._id)
-			const x = await User.findByIdAndRemove(_id).exec()
+			const x = await User.findByIdAndRemove(_id)
 			return gqlUser(x)			
 		}
 	}

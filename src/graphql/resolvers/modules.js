@@ -6,11 +6,11 @@ const ObjectId = require('mongoose').Types.ObjectId
 export default {
 	Query:{
 		modules: async(parent, args, {Module}) => {
-			const modules = await Module.find(args).exec()
+			const modules = await Module.find(args)
 			return modules.map(x => gqlModule(x))
 		},
 		module: async(parent, args, {Module}) => {
-			const x = await Module.findOne(args).exec()
+			const x = await Module.findOne(args)
 			return gqlModule(x)
 		},
 	},
@@ -22,12 +22,12 @@ export default {
 		updateModule: async(parent, args, {Module}) => {
 			const _id = ObjectId.createFromHexString(args._id)
 			delete args._id
-			const x = await Module.findByIdAndUpdate(_id, args).exec()
+			const x = await Module.findByIdAndUpdate(_id, args)
 			return gqlModule(x)
 		},
 		deleteModule: async(parent, args, {Module}) => {
 			const _id = ObjectId.createFromHexString(args._id)
-			const x = await Module.findByIdAndRemove(_id).exec()
+			const x = await Module.findByIdAndRemove(_id)
 			return gqlModule(x)
 		},
 	}
