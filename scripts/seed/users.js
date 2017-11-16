@@ -1,4 +1,5 @@
 import {User} from '../../src/models'
+import {hashPassword} from '../../src/utils/index';
 
 const users = [
 	{
@@ -29,7 +30,9 @@ const users = [
 ]
 async function seeder(){
 	await User.remove()
-	users.forEach(async(user) => await new User(user).save())
+	users.forEach(async(user) => await new User({...user,
+		password: hashPassword(user.password)
+	}).save())
 }
 
 export default seeder
