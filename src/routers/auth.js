@@ -39,15 +39,13 @@ const makeRouter = ({User}) => {
 
 	router.all(`/refresh`, async (req, res) => {
 		try{
-			const token = getToken(req)
-			const payload = validateToken(token, {ignoreExpiration: true})
-			const ua = req.get('user-agent')
-			if(payload.ua  !== ua) throw ''
+			const payload = validateToken(getToken(req), {ignoreExpiration: true})
+			if(payload.ua  !== req.get('user-agent')) throw ''
 		
 			const user = await User.findById(inflateId(payload._id))
 			if(!user) throw ''
 
-			res.json(createApiToken(payload._id, ua))
+			res.json(createApiToken(payload._id, payload.ua))
 		}catch(err){
 			fail(res, 403, `Invalid token.`)
 		}
