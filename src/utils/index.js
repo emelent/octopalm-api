@@ -62,7 +62,7 @@ export const inflateId = id => ObjectId.createFromHexString(id)
  * 
  * @return {bool}
  */
-export const isHex = val => {
+export const isHex24 = val => {
 	const reg = new RegExp(/^[0-9a-f]{24}$/i)
 	return reg.test(val)
 }

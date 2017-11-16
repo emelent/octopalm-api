@@ -1,12 +1,12 @@
 import {GraphQLError} from 'graphql'
 import {gqlEvent} from '../transformers'
-import {inflateId} from '../../utils'
+import {inflateId, isHex24} from '../../utils'
 const ObjectId = require('mongoose').Types.ObjectId
 
 export default {
 	Query:{
 		events: async(parent, args, {Event}) => {
-			if(args.venue && isHex(args.venue)){
+			if(args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const events = await Event.find(args)
@@ -19,14 +19,14 @@ export default {
 	},
 	Mutation:{
 		createEvent: async(parent, args, {Event}) => {
-			if(args.venue && isHex(args.venue)){
+			if(args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const x = await new Event(args).save()
 			return gqlEvent(x)
 		},
 		updateEvent: async(parent, args, {Event}) => {
-			if(args.venue && isHex(args.venue)){
+			if(args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const _id = ObjectId.createFromHexString(args._id)
