@@ -8,8 +8,8 @@
 	"prod": "babel-node scripts/server.prod.js",
 	"prep": "babel-node scripts/prepare.js",
 	"seed": "babel-node scripts/seed/index.js",
-    "test": "tape ./tests/*.test.js | tap-spec",
-    "cover": "istanbul cover tape ./tests/*.test.js",
+    "test": "tape ./tests/*.spec.js | tap-spec",
+    "cover": "istanbul cover tape ./tests/*.spec.js",
     "lint": "eslint ."
   },
   "keywords": [],
