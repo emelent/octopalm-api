@@ -33,14 +33,7 @@ export const createToken = (payload, options) =>
  * 
  * @return {Object | null}
  */
-export const validateToken = (token, options) => {
-	try{
-		return jwt.verify(token, publicCert, options)
-	}catch(e){
-		//do something with this maybe?
-	}
-	return null
-}
+export const validateToken = (token, options) => jwt.verify(token, publicCert, options)
 
 /**
  * Hash a password.
@@ -94,3 +87,9 @@ export const setToArray = (s) => {
 	s.forEach(v => arr.push(v))
 	return arr
 }
+
+/**
+ * Get Bearer token from authorization header.
+ * @param {*} req 
+ */
+export const getToken = (req) => req.get('authorization').split(' ')[1]
