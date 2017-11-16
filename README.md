@@ -4,11 +4,11 @@
 
 ### Up and running:
 
-    yarn
-	yarn run prep
+    npm install
+	npm run prep
 	mongod --dbpath="./data"
-	yarn run seed
-	yarn start
+	npm run seed
+	npm start
 
  And you're good to go. The graphql api should be up and
  running and available through your browser at http://localhost:5000/graphiql and via curl or other clients at http://localhost:5000/graphql.
