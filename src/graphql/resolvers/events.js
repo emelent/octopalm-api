@@ -10,7 +10,7 @@ export default {
 				args.venue = inflateId(args.venue)
 			}
 			const events = await Event.find(args)
-			return events.map(x => gqlEvent(x))
+			return events.map(gqlEvent)
 		},
 		event: async(parent, args, {Event}) => {
 			const x = await Event.findById(inflateId(args._id))

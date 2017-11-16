@@ -78,3 +78,19 @@ export const isHex = val => {
  * @return {Object}
  */
 export const createApiToken = (_id, ua, expiresIn=tokenDuration) => ({token: createToken({_id, ua}, {expiresIn})})
+
+/**
+ * Select a random value from an array.
+ * @param {Array} arr - Array
+ */
+export const pickRandom = arr => arr[Math.floor(Math.random() * Math.length())]
+
+/**
+ * Convert a set into an array.
+ * @param {*} s - Set
+ */
+export const setToArray = (s) => {
+	const arr = []
+	s.forEach(v => arr.push(v))
+	return arr
+}

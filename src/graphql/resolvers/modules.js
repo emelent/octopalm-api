@@ -20,13 +20,13 @@ export default {
 			return gqlModule(x)
 		},
 		updateModule: async(parent, args, {Module}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			delete args._id
 			const x = await Module.findByIdAndUpdate(_id, args)
 			return gqlModule(x)
 		},
 		deleteModule: async(parent, args, {Module}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			const x = await Module.findByIdAndRemove(_id)
 			return gqlModule(x)
 		},

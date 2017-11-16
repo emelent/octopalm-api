@@ -8,7 +8,7 @@ export default{
 	Query:{
 		venues: async(parent, args, {Venue}) => {
 			const venues = await Venue.find(args)
-			return venues.map(x => gqlVenue(x))
+			return venues.map(gqlVenue)
 		},
 		venue: async (parent, args, {Venue}) => {
 			const x = await Venue.findOne(args)
@@ -21,13 +21,13 @@ export default{
 			return gqlVenue(x)
 		},
 		updateVenue: async (parent, args, {Venue}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			delete args._id
 			const x = await Venue.findByIdAndUpdate(_id, args)
 			return gqlModule(x)
 		},
 		deleteVenue: async (parent, args, {Venue}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			const x = await Venue.findByIdAndRemove(_id)
 			return gqlModule(x)
 		},

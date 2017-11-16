@@ -12,7 +12,7 @@ export default {
 		},
 		users: async(parent, args, {User}) => {
 			const users = await User.find()
-			return users.map(x => gqlUser(x))
+			return users.map(gqlUser)
 		},
 	},
 	Mutation: {
@@ -22,10 +22,10 @@ export default {
 			const {_id, modules, timetables, name, group} = args
 			const x = await User.findById(inflateId(_id))
 			if(modules){
-				x.modules = modules.map(x => inflateId(x))
+				x.modules = modules.map(inflateId)
 			}
 			if(timetables){
-				x.timetables = timetables.map(x => inflateId(x))
+				x.timetables = timetables.map(inflateId)
 			}
 			if(name){
 				x.name = name
@@ -34,7 +34,7 @@ export default {
 				//TODO check if admin
 				x.group = group
 			}
-			return x.save().then(x => gqlUser(x))
+			return x.save().then(gqlUser)
 		},
 		updatePassword: async (parent, args, {User}) => {
 			const _id = inflateId(args._id)

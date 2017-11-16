@@ -1,12 +1,12 @@
 import {GraphQLError} from 'graphql'
 import {gqlTimetable} from '../transformers'
-import {inflateId} from '../../utils'
+import {inflateId, setToArray} from '../../utils'
 const ObjectId = require('mongoose').Types.ObjectId
 
 export default {
 	Query:{
 		timetablesByModules: async(parent, args, {Timetable}) => {
-			const modules = args.modules.map(x => inflateId(x))
+			const modules = args.modules.map(inflateId)
 			let timetables = []
 			if(args.strict){
 				timetables = await Timetable.find()
@@ -15,18 +15,18 @@ export default {
 				timetables = await Timetable.find()
 					.where('modules').in(modules)
 			}
-			return timetables.map(x => gqlTimetable(x))
+			return timetables.map(gqlTimetable)
 		},
 		timetablesByAuthor: async(parent, args, {Timetable}) => {
 			const timetables = await Timetable.find({
 				author_id: inflateId(args.author_id)
 			})
-			return timetables.map(x => gqlTimetable(x))
+			return timetables.map(gqlTimetable)
 		},
 
 		timetables: async(parent, args, {Timetable}) => {
 			const timetables = await Timetable.find()
-			return timetables.map(x => gqlTimetable(x))
+			return timetables.map(gqlTimetable)
 		}
 	},
 
@@ -45,16 +45,10 @@ export default {
 
 			if (args.events) {
 				//update events ObjectId array 
-				timetable.events = args.events.map(x => ObjectId.createFromHexString(x))
-
-				const setToArray = (s) => {
-					const arr = []
-					s.forEach(v => arr.push(v))
-					return arr
-				}
+				timetable.events = args.events.map(inflateId)
 
 				//get actual events that match given id's
-				const ids = args.events.map(x => inflateId(x))
+				const ids = args.events.map(inflateId)
 				const events = await Event.find().where('_id').in(ids)
 
 				const modules = events.filter(x => {
@@ -63,14 +57,14 @@ export default {
 				}).map(x => x.module_id.toString())
 
 				const moduleSet = new Set(modules)
-				timetable.modules = setToArray(moduleSet).map(x => inflateId(x))
+				timetable.modules = setToArray(moduleSet).map(inflateId)
 			}
 			if (args.alias) {
 				//update user's alias for timetable
 				//requires user id
 			}
 
-			return timetable.save().then(x => gqlTimetable(x))
+			return timetable.save().then(gqlTimetable)
 		},	
 	}
 }
