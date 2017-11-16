@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-// import {privKey, pubKey} from '../src/constants'
 
 const devEnvPath = path.resolve('.env.development')
 const prodEnvPath = path.resolve('.env.production')
@@ -21,5 +20,6 @@ DB_URL = 'mongodb://localhost/mydb'
 fs.writeFileSync(devEnvPath, dev_env)
 fs.writeFileSync(prodEnvPath, prod_env)
 
-// TODO Generate ssl keys
-fs.mkdirSync(dbPath)
+try {
+	fs.mkdirSync(dbPath)	
+} catch (error) {}
