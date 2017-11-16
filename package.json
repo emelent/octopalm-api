@@ -4,7 +4,10 @@
   "description": "Octopalm Graphql Api",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon --exec babel-node scripts/server.dev.js",
+	"prod": "babel-node scripts/server.prod.js",
+	"prep": "babel-node scripts/prepare.js",
+	"seed": "babel-node scripts/seed/index.js",
     "test": "tape ./tests/*.test.js | tap-spec",
     "cover": "istanbul cover tape ./tests/*.test.js",
     "lint": "eslint ."

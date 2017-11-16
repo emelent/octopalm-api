@@ -1,2 +1,6 @@
-export const dbUrl = 'mongodb://localhost/mydb'
-export const port = 5000
+
+import path from 'path'
+
+// absolute paths
+export const privKey = path.resolve('.keys/private.key')
+export const pubKey = path.resolve('.keys/public.key')

@@ -1,19 +1,14 @@
 import express from 'express'
 import {graphiqlExpress} from 'apollo-server-express'
-import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
 
-import {dbUrl, port} from './constants'
 import models from './models'
 import makeAuthRouter from './routers/auth'
 import makeGraphqlRouter from './routers/graphql'
+import configureMongoose from './mongoose.config'
 
-
-//set mongoose to return standard Javascript Promises instead of Mongoose promises
-//so we can use await/async stuff.
-mongoose.Promise =  global.Promise
-mongoose.connect(dbUrl, {useMongoClient: true})
-
+configureMongoose(mongoose)
 
 //cors middleware
 const cors = (req, res, next) => {
@@ -27,6 +22,8 @@ const cors = (req, res, next) => {
 }
 
 const app = express()
+
+// attach middleware
 app.use(cors)
 app.use(bodyParser.json())
 
@@ -39,7 +36,8 @@ app.use('/graphql', makeGraphqlRouter(models))
 //attach graphiql
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
-
+// start listening
+const port = parseInt(process.env.PORT) || 5000
 app.listen(port, () => {
 	console.log(`Listening on :${port}`)
 })

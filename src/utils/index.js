@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 import hash from 'jshashes'
+
+import {privKey, pubKey} from '../constants'
 const {ObjectId} = require('mongoose').Types
 
 
@@ -8,8 +10,8 @@ const alg = new hash.SHA256
 const tokenDuration = '2d'
 
 //private and public key streams
-const privateCert = fs.readFileSync('key.pem')
-const publicCert = fs.readFileSync('cert.pem')
+const privateCert = fs.readFileSync(privKey)
+const publicCert = fs.readFileSync(pubKey)
 
 
 /**
