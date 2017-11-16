@@ -11,6 +11,7 @@ const dbPath = path.resolve('data')
 const dev_env = `
 PORT = '5000'
 DB_URL = 'mongodb://localhost/mydb'
+HOST = '0.0.0.0'
 `
 // Generate .env files
 const prod_env = `
