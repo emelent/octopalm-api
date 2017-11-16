@@ -10,8 +10,15 @@ const alg = new hash.SHA256
 const tokenDuration = '2d'
 
 //private and public key streams
-const privateCert = fs.readFileSync(privKey)
-const publicCert = fs.readFileSync(pubKey)
+let privateCert = null
+let publicCert = null
+const secret = `Don't say word...`
+
+try {
+	privateCert = fs.readFileSync(privKey)
+	publicCert = fs.readFileSync(pubKey)
+} catch (error) {}
+
 
 
 /**
@@ -22,7 +29,9 @@ const publicCert = fs.readFileSync(pubKey)
  * @return {String}
  */
 export const createToken = (payload, options) => 
-	jwt.sign(payload, privateCert, { algorithm: 'RS256'}, options)
+	(!privateCert || !publicCert)?
+		jwt.sign(payload, secret, options):
+		jwt.sign(payload, privateCert, { algorithm: 'RS256'}, options)
 
 /**
  * Validates the token, returns the decoded payload if the token is
@@ -33,7 +42,10 @@ export const createToken = (payload, options) =>
  * 
  * @return {Object | null}
  */
-export const validateToken = (token, options) => jwt.verify(token, publicCert, options)
+export const validateToken = (token, options) =>
+	(!privateCert || !publicCert)? 
+		jwt.verify(token, secret, options):
+		jwt.verify(token, publicCert, options)
 
 /**
  * Hash a password.
