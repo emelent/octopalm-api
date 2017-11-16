@@ -21,11 +21,11 @@ configureMongoose(mongoose)
 
 // these are ordered according to dependencies
 // and have to run a certain order.
-seedModules(20)
-seedUsers(10)
-seedVenues(20)
-seedEvents(20)
-seedTimetables(20)
+seedModules()
+seedUsers()
+seedVenues()
+seedEvents()
+seedTimetables()
 
 // disconnect to db
 mongoose.disconnect()

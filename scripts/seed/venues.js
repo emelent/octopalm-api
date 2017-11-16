@@ -1,12 +1,36 @@
-function clear(){
-	console.log(`Clearing venues collection.`)
-}
+import {Venue} from '../../src/models'
 
-function seeder(n, clearCollection=true){
-	if(clearCollection){
-		clear()
-	}
+const venues = [
+	{
+		"name": "IT 4-1"
+	},
+	{
+		"name": "IT 4-2"
+	},
+	{
+		"name": "IT 4-3"
+	},
+	{
+		"name": "IT 4-4"
+	},
+	{
+		"name": "IT 4-5"
+	},
+	{
+		"name": "EMB 4-152"
+	},
+	{
+		"name": "EMB 4-151"
+	},
+	{
+		"name": "EMB 4-153"
+	},
+]
+
+function seeder(){
+	Venue.remove()
 	console.log(`Seeding ${n} venues.`)
+	venues.forEach(async(venue) => await new Venue(venue).save())
 }
 
 export default seeder
