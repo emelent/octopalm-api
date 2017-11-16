@@ -83,7 +83,7 @@ export const createApiToken = (_id, ua, expiresIn=tokenDuration) => ({token: cre
  * Select a random value from an array.
  * @param {Array} arr - Array
  */
-export const pickRandom = arr => arr[Math.floor(Math.random() * Math.length())]
+export const pickRandom = arr => arr[Math.floor(Math.random() * arr.length)]
 
 /**
  * Convert a set into an array.

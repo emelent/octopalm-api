@@ -26,8 +26,8 @@ const generateCode = n => {
 
 }
 
-function seeder() {
-	Module.remove()
+async function seeder() {
+	await Module.remove()
 	modules.forEach(
 		async(module) => await new Module(module).save()
 	)

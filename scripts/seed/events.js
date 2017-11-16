@@ -41,8 +41,7 @@ const events = [
 }]
 
 async function seeder(){
-	Event.remove()
-
+	await Event.remove()
 	const modules = await Module.find()
 	const venues = await Venue.find()
  

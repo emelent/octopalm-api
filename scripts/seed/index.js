@@ -16,16 +16,26 @@ process.env.NODE_ENV = ENV
 config({path: `.env.${ENV}`})
 
 
-// connect to db
-configureMongoose(mongoose)
+async function seed(){
 
-// these are ordered according to dependencies
-// and have to run a certain order.
-seedModules()
-seedUsers()
-seedVenues()
-seedEvents()
-seedTimetables()
+	// connect to db
+	configureMongoose(mongoose)
 
-// disconnect to db
-mongoose.disconnect()
+	// these are ordered according to dependencies
+	// and have to run a certain order.
+	try{
+		await seedModules()
+		await seedUsers()
+		await seedVenues()
+		await seedEvents()
+		await seedTimetables()
+	}catch(e){
+		throw e;
+	}finally{
+		// disconnect to db
+		mongoose.disconnect()
+	}
+}
+
+seed().then(() => console.log(`Database seeded.`))
+	.catch(err => console.log(`Seeding failed: ${err}`) )

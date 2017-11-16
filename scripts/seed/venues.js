@@ -27,9 +27,8 @@ const venues = [
 	},
 ]
 
-function seeder(){
-	Venue.remove()
-	console.log(`Seeding ${n} venues.`)
+async function seeder(){
+	await Venue.remove()
 	venues.forEach(async(venue) => await new Venue(venue).save())
 }
 

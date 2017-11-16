@@ -27,10 +27,8 @@ const users = [
 		"password": "password"
 	},
 ]
-function seeder(){
-	User.remove()
-
-	console.log(`Seeding ${n} users.`)
+async function seeder(){
+	await User.remove()
 	users.forEach(async(user) => await new User(user).save())
 }
 
