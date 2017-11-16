@@ -48,7 +48,7 @@ export default {
 			return "Password successfully updated."
 		},
 		deleteUser: async (parent, args, {User}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			const x = await User.findByIdAndRemove(_id)
 			return gqlUser(x)			
 		}

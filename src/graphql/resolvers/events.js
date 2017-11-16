@@ -29,13 +29,13 @@ export default {
 			if(args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			delete args._id
 			const x = await Event.findByIdAndUpdate(_id, args)
 			return gqlEvent(x)
 		},
 		deleteEvent: async(parent, args, {Event}) => {
-			const _id = ObjectId.createFromHexString(args._id)
+			const _id = inflateId(args._id)
 			const x = await Event.findByIdAndRemove(_id)
 			return gqlEvent(x)
 		},
