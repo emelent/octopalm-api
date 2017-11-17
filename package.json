@@ -8,8 +8,10 @@
     "prod": "babel-node scripts/server.prod.js",
     "prep": "babel-node scripts/prepare.js",
     "seed": "babel-node scripts/seed/index.js",
-    "test": "NODE_ENV=test tape -r babel-register -r babel-polyfill ./tests/**/*.spec.js | tap-spec",
-    "cover": "NODE_ENV=test istanbul cover tape -r babel-register -r babel-polyfill ./tests/**/*.spec.js",
+	"test": "npm run  test:raw | tap-spec",
+	"test:raw":"NODE_ENV=test tape -r babel-register -r babel-polyfill ./tests/**/*.spec.js",
+	"cover": "istanbul cover npm run test:raw",
+	"test:watch": "NODE_ENV=test nodemon --exec npm test -q -w ./src -w ./tests",
     "lint": "eslint ."
   },
   "keywords": [],
