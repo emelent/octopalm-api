@@ -23,19 +23,19 @@ async function seed(){
 
 	// these are ordered according to dependencies
 	// and have to run a certain order.
-	try{
+	try {
 		await seedModules()
 		await seedUsers()
 		await seedVenues()
 		await seedEvents()
 		await seedTimetables()
-	}catch(e){
-		throw e;
-	}finally{
+	} catch (e){
+		throw e
+	} finally {
 		// disconnect to db
 		mongoose.disconnect()
 	}
 }
 
 seed().then(() => console.log(`Database seeded.`))
-	.catch(err => console.log(`Seeding failed: ${err}`) )
+	.catch(err => console.log(`Seeding failed: ${err}`))
