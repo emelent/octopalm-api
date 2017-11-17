@@ -24,7 +24,7 @@ const venues = [
 	},
 	{
 		"name": "EMB 4-153"
-	},
+	}
 ]
 
 async function seeder(){

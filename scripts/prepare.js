@@ -21,5 +21,5 @@ fs.writeFileSync(devEnvPath, dev_env)
 fs.writeFileSync(prodEnvPath, prod_env)
 
 try {
-	fs.mkdirSync(dbPath)	
+	fs.mkdirSync(dbPath)
 } catch (error) {}

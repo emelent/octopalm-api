@@ -1,5 +1,5 @@
 import {User} from '../../src/models'
-import {hashPassword} from '../../src/utils/index';
+import {hashPassword} from '../../src/utils/index'
 
 const users = [
 	{
@@ -26,7 +26,7 @@ const users = [
 		"name": "Mira",
 		"student_id": "12345672",
 		"password": "password"
-	},
+	}
 ]
 async function seeder(){
 	await User.remove()

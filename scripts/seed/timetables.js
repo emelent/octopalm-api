@@ -10,20 +10,20 @@ async function seeder(){
 	const numTables = 10
 	
 
-	for(let i=0; i < numTables; i++){
+	for (let i=0; i < numTables; i++){
 		const user = pickRandom(users)
 		const data = {
 			author_id: user._id,
 			name: random.words(2)
 		}
 		const numEvents = Math.floor(Math.random() * (events.length/2))
-		const blankEvents = Array.apply(null, {length: 5}).map((v, i) => i)
+		const blankEvents = Array(...{length: numEvents}).map((v, i) => i)
 		let availableEvents = events.concat()
 		const selectedEvents = blankEvents.map(
 			() => {
 				const event = pickRandom(availableEvents)
 				availableEvents = availableEvents.filter(
-					e => e !== event 
+					e => e !== event
 				)
 				return event._id
 			})
