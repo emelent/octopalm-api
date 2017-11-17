@@ -1,13 +1,15 @@
-data
-.DS_Store
+data/
+.DS_Store/
 node_modules/
 dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-*.pem
-.env
+.keys/
+.env.*
+
+coverage/
 
 # Editor directories and files
 .idea

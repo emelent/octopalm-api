@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const {ObjectId, Mixed} = mongoose.Schema.Types
 
 const schema = new mongoose.Schema({
