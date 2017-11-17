@@ -10,10 +10,7 @@ import seedVenues from './venues'
 
 
 // set up environment
-const ENV = 'development'
-process.env.BABEL_ENV = ENV
-process.env.NODE_ENV = ENV
-config({path: `.env.${ENV}`})
+config({path: `.env.${process.env.NODE_ENV}`})
 
 
 async function seed(){
@@ -37,5 +34,5 @@ async function seed(){
 	}
 }
 
-seed().then(() => console.log(`Database seeded.`))
+seed().then(() => console.log(`${process.env.NODE_ENV.toString()} database seeded.`))
 	.catch(err => console.log(`Seeding failed: ${err}`))

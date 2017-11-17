@@ -3,6 +3,7 @@ import path from 'path'
 
 const devEnvPath = path.resolve('.env.development')
 const prodEnvPath = path.resolve('.env.production')
+const testEnvPath = path.resolve('.env.test')
 const dbPath = path.resolve('data')
 
 
@@ -12,13 +13,16 @@ PORT = '5000'
 DB_URL = 'mongodb://localhost/mydb'
 HOST = '0.0.0.0'
 `
-// Generate .env files
 const prod_env = `
 DB_URL = 'mongodb://localhost/mydb'
+`
+const prod_test = `
+DB_URL = 'mongodb://localhost/mytest'
 `
 
 fs.writeFileSync(devEnvPath, dev_env)
 fs.writeFileSync(prodEnvPath, prod_env)
+fs.writeFileSync(testEnvPath, prod_test)
 
 try {
 	fs.mkdirSync(dbPath)
