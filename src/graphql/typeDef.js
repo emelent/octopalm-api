@@ -1,6 +1,6 @@
 //GraphQL Type Definitions
 
-module.exports = `
+export default `
 type Module {
 	_id: ID!
 	name: String!
@@ -58,11 +58,7 @@ type Query {
 		name:String
 		_id: ID
 	): Venue
-	# Return unoccupied venues
-	emptyVenues(
-		time: String!
-	): [Venue]!
-
+	
 	# Return module by code or _id
 	module(
 		_id: String
