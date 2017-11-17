@@ -22,16 +22,17 @@ const makeRouter = ({User}) => {
 	})
 
 	router.post(`/register`, async (req, res) => {
+		if (!req.body.password || !req.body.student_id || !req.body.name)
+			return fail(res, 422, `Requires name, password, student_id fields to be provided.`)
+	
 		req.body.password = hashPassword(req.body.password)
 		
 		try {
 			const user = await new User(req.body).save()
-			if (!user)
-				return fail(res, 401, `Hmmm... what are you trying to do?`)
 			const _id = user._id.toString()
 			const ua = req.get(`user-agent`)
 			
-			res.json(createApiToken(_id, ua))
+			res.status(201).json(createApiToken(_id, ua))
 		} catch (e){
 			return fail(res, 401, `Duplicate student number.`)
 		}

@@ -82,7 +82,7 @@ export const isHex24 = val => {
  *
  * @return {Object}
  */
-export const createApiToken = (_id, ua, expiresIn=tokenDuration) => ({token: createToken({_id, ua}, {expiresIn})})
+export const createApiToken = (_id, ua, expiresIn=tokenDuration) => createToken({_id, ua}, {expiresIn})
 
 /**
  * Select a random value from an array.
