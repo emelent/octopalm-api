@@ -5,11 +5,11 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec babel-node scripts/server.dev.js --watch ./src",
-	"prod": "babel-node scripts/server.prod.js",
-	"prep": "babel-node scripts/prepare.js",
-	"seed": "babel-node scripts/seed/index.js",
-    "test": "tape ./tests/*.spec.js | tap-spec",
-    "cover": "istanbul cover tape ./tests/*.spec.js",
+    "prod": "babel-node scripts/server.prod.js",
+    "prep": "babel-node scripts/prepare.js",
+    "seed": "babel-node scripts/seed/index.js",
+    "test": "NODE_ENV=test tape -r babel-register -r babel-polyfill ./tests/**/*.spec.js | tap-spec",
+    "cover": "NODE_ENV=test istanbul cover tape -r babel-register -r babel-polyfill ./tests/**/*.spec.js",
     "lint": "eslint ."
   },
   "keywords": [],
@@ -31,8 +31,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
     "faker": "^4.1.0",
     "istanbul": "^0.4.5",
     "mongoose-seed": "^0.3.2",
