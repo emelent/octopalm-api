@@ -1,8 +1,5 @@
-import {GraphQLError} from 'graphql'
-import {gqlVenue} from '../transformers'
+import {gqlVenue, gqlModule} from '../transformers'
 import {inflateId} from '../../utils'
-
-const ObjectId = require('mongoose').Types.ObjectId
 
 export default{
 	Query:{
@@ -30,6 +27,6 @@ export default{
 			const _id = inflateId(args._id)
 			const x = await Venue.findByIdAndRemove(_id)
 			return gqlModule(x)
-		},
+		}
 	}
 }

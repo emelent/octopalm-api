@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-const {ObjectId} = mongoose.Schema.Types
-
 const schema = mongoose.Schema({
 	name: {
 		type: String,
@@ -10,4 +8,4 @@ const schema = mongoose.Schema({
 		uppercase: true
 	}
 })
-module.exports = mongoose.model('Venue', schema)
+export default mongoose.model('Venue', schema)

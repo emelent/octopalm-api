@@ -1,5 +1,5 @@
 import express from 'express'
-import {getToken, createApiToken, createToken, validateToken, hashPassword, inflateId} from '../utils'
+import {getToken, createApiToken, validateToken, hashPassword, inflateId} from '../utils'
 
 
 const fail = (res, code, msg) => res.status(code).json(msg)
@@ -7,13 +7,13 @@ const fail = (res, code, msg) => res.status(code).json(msg)
 const makeRouter = ({User}) => {
 	const router = express.Router()
 	router.post(`/login`, async (req, res) => {
-		if(!req.body.password || !req.body.student_id)
+		if (!req.body.password || !req.body.student_id)
 			return fail(res, 422, `No password or student_id provided.`)
 		
 		req.body.password = hashPassword(req.body.password)
 		const user = await User.findOne(req.body)
 
-		if(!user)
+		if (!user)
 			return fail(res, 403, `Invalid login credentials.`)
 
 		const _id = user._id.toString()
@@ -24,32 +24,32 @@ const makeRouter = ({User}) => {
 	router.post(`/register`, async (req, res) => {
 		req.body.password = hashPassword(req.body.password)
 		
-		try{
+		try {
 			const user = await new User(req.body).save()
-			if(!user)
+			if (!user)
 				return fail(res, 401, `Hmmm... what are you trying to do?`)
 			const _id = user._id.toString()
 			const ua = req.get(`user-agent`)
 			
 			res.json(createApiToken(_id, ua))
-		}catch(e){
+		} catch (e){
 			return fail(res, 401, `Duplicate student number.`)
 		}
 	})
 
 	router.all(`/refresh`, async (req, res) => {
-		try{
+		try {
 			const payload = validateToken(getToken(req), {ignoreExpiration: true})
-			if(payload.ua  !== req.get('user-agent')) throw ''
+			if (payload.ua  !== req.get('user-agent')) throw ''
 		
 			const user = await User.findById(inflateId(payload._id))
-			if(!user) throw ''
+			if (!user) throw ''
 
 			res.json(createApiToken(payload._id, payload.ua))
-		}catch(err){
+		} catch (err){
 			fail(res, 403, `Invalid token.`)
 		}
-	})	
+	})
 
 	return router
 }

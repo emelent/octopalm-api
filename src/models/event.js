@@ -28,7 +28,7 @@ const schema = new mongoose.Schema({
 		type: String,
 		uppercase: true,
 		required: true
-	},	
+	},
 	group: {
 		type: String,
 		uppercase: true
@@ -37,4 +37,4 @@ const schema = new mongoose.Schema({
 	author_id: ObjectId,
 	venue: Mixed
 })
-module.exports = mongoose.model('Event', schema)
+export default mongoose.model('Event', schema)

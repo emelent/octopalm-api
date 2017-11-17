@@ -25,10 +25,10 @@ try {
  * Creates a signed jwt token with the given payload and options
  * @param {Object} payload 	- Token payload.
  * @param {Object} options 	- Token options.
- * 
+ *
  * @return {String}
  */
-export const createToken = (payload, options) => 
+export const createToken = (payload, options) =>
 	(!privateCert || !publicCert)?
 		jwt.sign(payload, secret, options):
 		jwt.sign(payload, privateCert, { algorithm: 'RS256'}, options)
@@ -36,14 +36,14 @@ export const createToken = (payload, options) =>
 /**
  * Validates the token, returns the decoded payload if the token is
  * valid or null if invalid.
- * 
+ *
  * @param {String} token  	- Jwt token.
  * @param {Object} options 	- Validation options.
- * 
+ *
  * @return {Object | null}
  */
 export const validateToken = (token, options) =>
-	(!privateCert || !publicCert)? 
+	(!privateCert || !publicCert)?
 		jwt.verify(token, secret, options):
 		jwt.verify(token, publicCert, options)
 
@@ -56,7 +56,7 @@ export const hashPassword = password => alg.hex(password)
 /**
  * Creates a mongoose ObjectId from hex string.
  * @param {String} id 	- 24 character hex string.
- * 
+ *
  * @return ObjectId
  */
 export const inflateId = id => ObjectId.createFromHexString(id)
@@ -64,7 +64,7 @@ export const inflateId = id => ObjectId.createFromHexString(id)
 /**
  * Checks if given value is a 24 character hex.
  * @param {String} val 	- Value to check.
- * 
+ *
  * @return {bool}
  */
 export const isHex24 = val => {
@@ -76,10 +76,10 @@ export const isHex24 = val => {
 /**
  * Creates a new json webt token with the expiray date set to the value
  * in the expiresIn constant.
- *  
+ *
  * @param {String} _id 		- User Id string
  * @param {String} ua		- User agent string
- * 
+ *
  * @return {Object}
  */
 export const createApiToken = (_id, ua, expiresIn=tokenDuration) => ({token: createToken({_id, ua}, {expiresIn})})
@@ -102,6 +102,6 @@ export const setToArray = (s) => {
 
 /**
  * Get Bearer token from authorization header.
- * @param {*} req 
+ * @param {*} req
  */
 export const getToken = (req) => req.get('authorization').split(' ')[1]

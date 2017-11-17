@@ -8,14 +8,14 @@ const schema = mongoose.Schema({
 		required: true
 	},
 	events: {
-		type: [ObjectId],
+		type: [ObjectId]
 	},
 	modules: {
-		type: [ObjectId],
+		type: [ObjectId]
 	},
 	author_id: {
 		type: ObjectId,
 		required: true
 	}
 })
-module.exports = mongoose.model('Timetable', schema)
+export default mongoose.model('Timetable', schema)

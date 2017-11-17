@@ -1,12 +1,10 @@
-import {GraphQLError} from 'graphql'
 import {gqlEvent} from '../transformers'
 import {inflateId, isHex24} from '../../utils'
-const ObjectId = require('mongoose').Types.ObjectId
 
 export default {
 	Query:{
 		events: async(parent, args, {Event}) => {
-			if(args.venue && isHex24(args.venue)){
+			if (args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const events = await Event.find(args)
@@ -15,18 +13,18 @@ export default {
 		event: async(parent, args, {Event}) => {
 			const x = await Event.findById(inflateId(args._id))
 			return gqlEvent(x)
-		},
+		}
 	},
 	Mutation:{
 		createEvent: async(parent, args, {Event}) => {
-			if(args.venue && isHex24(args.venue)){
+			if (args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const x = await new Event(args).save()
 			return gqlEvent(x)
 		},
 		updateEvent: async(parent, args, {Event}) => {
-			if(args.venue && isHex24(args.venue)){
+			if (args.venue && isHex24(args.venue)){
 				args.venue = inflateId(args.venue)
 			}
 			const _id = inflateId(args._id)
@@ -38,6 +36,6 @@ export default {
 			const _id = inflateId(args._id)
 			const x = await Event.findByIdAndRemove(_id)
 			return gqlEvent(x)
-		},
+		}
 	}
 }

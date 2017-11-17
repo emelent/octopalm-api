@@ -10,7 +10,7 @@ const schema = makeExecutableSchema({
 })
 
 const makeGraphqlRouter = models => graphqlExpress(req => ({
-	schema, 
+	schema,
 	context: {...models, req}
 }))
 
