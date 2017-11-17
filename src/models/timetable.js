@@ -18,4 +18,4 @@ const schema = mongoose.Schema({
 		required: true
 	}
 })
-export default mongoose.model('Timetable', schema)
+module.exports=mongoose.model('Timetable', schema)

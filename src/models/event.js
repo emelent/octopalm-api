@@ -37,4 +37,4 @@ const schema = new mongoose.Schema({
 	author_id: ObjectId,
 	venue: Mixed
 })
-export default mongoose.model('Event', schema)
+module.exports=mongoose.model('Event', schema)
