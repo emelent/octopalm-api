@@ -9,10 +9,10 @@ import makeGraphqlRouter from './graphql'
 //cors middleware
 const cors = (req, res, next) => {
 	res.set('Access-Control-Allow-Origin', '*')
-	res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+	res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
 	res.set('Content-Type', 'application/json')
 
-	if(req.method === 'OPTIONS') return res.sendStatus(200)
+	if (req.method === 'OPTIONS') return res.sendStatus(200)
 	next()
 }
 
@@ -29,9 +29,9 @@ app.use('/auth', makeAuthRouter(models))
 app.use('/graphql', makeGraphqlRouter(models))
 
 //attach graphiql
-app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
+app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}))
 
 //dummy route
-if(process.env.NODE_ENV !== 'production')
+if (process.env.NODE_ENV !== 'production')
 	app.all('/hello', (req, res) => res.status(200).json(`Well, hello there in Tibet.`))
 export default app

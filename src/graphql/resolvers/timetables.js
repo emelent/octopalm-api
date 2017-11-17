@@ -1,4 +1,3 @@
-import {GraphQLError} from 'graphql'
 import {gqlTimetable} from '../transformers'
 import {inflateId, setToArray} from '../../utils'
 const ObjectId = require('mongoose').Types.ObjectId
@@ -8,10 +7,10 @@ export default {
 		timetablesByModules: async(parent, args, {Timetable}) => {
 			const modules = args.modules.map(inflateId)
 			let timetables = []
-			if(args.strict){
+			if (args.strict){
 				timetables = await Timetable.find()
 					.where('modules').size(modules.length)
-			}else{
+			} else {
 				timetables = await Timetable.find()
 					.where('modules').in(modules)
 			}
@@ -44,7 +43,7 @@ export default {
 			const timetable = await Timetable.findById(inflateId(args._id))
 
 			if (args.events) {
-				//update events ObjectId array 
+				//update events ObjectId array
 				timetable.events = args.events.map(inflateId)
 
 				//get actual events that match given id's
@@ -65,6 +64,6 @@ export default {
 			}
 
 			return timetable.save().then(gqlTimetable)
-		},	
+		}
 	}
 }

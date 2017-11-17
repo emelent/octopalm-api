@@ -1,5 +1,3 @@
-const ObjectId = require('mongoose').Types.ObjectId
-
 //=========================
 // Transformer Functions
 //
@@ -54,7 +52,7 @@ export const gqlTimetable = x => {
 }
 
 export const gqlVenue = x => {
-	if(!x) return
+	if (!x) return
 	x._id = x._id.toString()
 	return x
 }

@@ -2,7 +2,6 @@ import {GraphQLError} from 'graphql'
 import {gqlUser} from '../transformers'
 import {inflateId, hashPassword} from '../../utils'
 
-const ObjectId = require('mongoose').Types.ObjectId
 
 export default {
 	Query: {
@@ -13,7 +12,7 @@ export default {
 		users: async(parent, args, {User}) => {
 			const users = await User.find()
 			return users.map(gqlUser)
-		},
+		}
 	},
 	Mutation: {
 
@@ -21,16 +20,16 @@ export default {
 			//check if user is admin or owner
 			const {_id, modules, timetables, name, group} = args
 			const x = await User.findById(inflateId(_id))
-			if(modules){
+			if (modules){
 				x.modules = modules.map(inflateId)
 			}
-			if(timetables){
+			if (timetables){
 				x.timetables = timetables.map(inflateId)
 			}
-			if(name){
+			if (name){
 				x.name = name
 			}
-			if(group){
+			if (group){
 				//TODO check if admin
 				x.group = group
 			}
@@ -41,7 +40,7 @@ export default {
 			const hash = hashPassword(args.password)
 			const user = await User.findById(_id)
 
-			if(user.password !== hash)
+			if (user.password !== hash)
 				return GraphQLError("Invalid password.")
 
 			user.password = hashPassword(args.new_password)
@@ -50,7 +49,7 @@ export default {
 		deleteUser: async (parent, args, {User}) => {
 			const _id = inflateId(args._id)
 			const x = await User.findByIdAndRemove(_id)
-			return gqlUser(x)			
+			return gqlUser(x)
 		}
 	}
 }

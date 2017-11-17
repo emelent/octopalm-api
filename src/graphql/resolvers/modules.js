@@ -1,7 +1,5 @@
-import {GraphQLError} from 'graphql'
 import {gqlModule} from '../transformers'
 import {inflateId} from '../../utils'
-const ObjectId = require('mongoose').Types.ObjectId
 
 export default {
 	Query:{
@@ -12,7 +10,7 @@ export default {
 		module: async(parent, args, {Module}) => {
 			const x = await Module.findOne(args)
 			return gqlModule(x)
-		},
+		}
 	},
 	Mutation: {
 		createModule: async(parent, args, {Module}) => {
@@ -29,6 +27,6 @@ export default {
 			const _id = inflateId(args._id)
 			const x = await Module.findByIdAndRemove(_id)
 			return gqlModule(x)
-		},
+		}
 	}
 }
