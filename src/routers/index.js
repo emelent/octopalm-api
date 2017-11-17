@@ -31,4 +31,7 @@ app.use('/graphql', makeGraphqlRouter(models))
 //attach graphiql
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
+//dummy route
+if(process.env.NODE_ENV !== 'production')
+	app.all('/hello', (req, res) => res.status(200).json(`Well, hello there in Tibet.`))
 export default app
