@@ -21,7 +21,7 @@ const test_local = `
 	DB_URL = 'mongodb://localhost/mydb'
 `
 const test_ci = `
-DB_URL = 'mongodb://<dbuser>:<dbpassword>@ds113636.mlab.com:13636/ranga'
+DB_URL = 'mongodb://test:test@ds113636.mlab.com:13636/ranga'
 `
 const isCI = process.env.NODE_ENV === 'ci'
 fs.writeFileSync(devEnvPath, dev_env)
