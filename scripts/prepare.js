@@ -16,13 +16,13 @@ HOST = '0.0.0.0'
 const prod_env = `
 DB_URL = 'mongodb://localhost/mydb'
 `
-const prod_test = `
-DB_URL = 'mongodb://localhost/mytest'
+const test_env = `
+DB_URL = 'mongodb://localhost:27017/mytest'
 `
 
 fs.writeFileSync(devEnvPath, dev_env)
 fs.writeFileSync(prodEnvPath, prod_env)
-fs.writeFileSync(testEnvPath, prod_test)
+fs.writeFileSync(testEnvPath, test_env)
 
 try {
 	fs.mkdirSync(dbPath)
