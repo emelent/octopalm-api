@@ -8,4 +8,4 @@ const schema = mongoose.Schema({
 		uppercase: true
 	}
 })
-export default mongoose.model('Venue', schema)
+module.exports= mongoose.model('Venue', schema)

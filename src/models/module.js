@@ -23,4 +23,4 @@ const schema = new mongoose.Schema({
 		uppercase: true
 	}
 })
-export default mongoose.model('Module', schema)
+module.exports = mongoose.model('Module', schema)

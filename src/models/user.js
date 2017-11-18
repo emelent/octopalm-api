@@ -40,4 +40,4 @@ const schema = new mongoose.Schema({
 	timetable_aliases: [TimetableAlias]
 })
 
-export default mongoose.model('User', schema)
+module.exports= mongoose.model('User', schema)
