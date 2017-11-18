@@ -16,13 +16,17 @@ HOST = '0.0.0.0'
 const prod_env = `
 DB_URL = 'mongodb://localhost/mydb'
 `
-const test_env = `
-DB_URL = 'mongodb://localhost:27017/mytest'
-`
 
+const test_local = `
+	DB_URL = 'mongodb://localhost/mydb'
+`
+const test_ci = `
+DB_URL = 'mongodb://<dbuser>:<dbpassword>@ds113636.mlab.com:13636/ranga'
+`
+const isCI = process.env.NODE_ENV === 'ci'
 fs.writeFileSync(devEnvPath, dev_env)
 fs.writeFileSync(prodEnvPath, prod_env)
-fs.writeFileSync(testEnvPath, test_env)
+fs.writeFileSync(testEnvPath, (isCI)? test_ci:test_local)
 
 try {
 	fs.mkdirSync(dbPath)

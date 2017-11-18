@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon --exec babel-node scripts/server.dev.js --watch ./src",
     "prod": "babel-node scripts/server.prod.js",
-    "prep": "babel-node scripts/prepare.js",
+	"prep": "babel-node scripts/prepare.js",
+	"prep:ci": "NODE_ENV=ci babel-node scripts/prepare.js",
     "seed": "NODE_ENV=development npm run seed:raw",
     "seed:raw": "babel-node scripts/seed/index.js",
     "test": "NODE_ENV=test npm run seed:raw && npm run test:raw | tap-spec",
