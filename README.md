@@ -20,5 +20,5 @@
 
 ### To Do:
 - Secure certain routes
-- Write actual tests
+- Test the graphql resolvers
 
