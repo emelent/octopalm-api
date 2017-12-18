@@ -7,6 +7,14 @@ export default {
 			const modules = await Module.find(args)
 			return modules.map(x => gqlModule(x))
 		},
+		resolveModules: async(parent, args, {Module}) => {
+			console.log('args =>',  args)
+			const ids = args.modules.map(inflateId)
+			console.log('module id =>', ids)
+			const modules = await Module.find().where('_id').in(ids)
+			console.log('modules =>',  modules)
+			return modules.map(gqlModule)
+		},
 		module: async(parent, args, {Module}) => {
 			const x = await Module.findOne(args)
 			return gqlModule(x)

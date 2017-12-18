@@ -13,6 +13,11 @@ export default {
 		event: async(parent, args, {Event}) => {
 			const x = await Event.findById(inflateId(args._id))
 			return gqlEvent(x)
+		},
+		resolveEvents: async(parent, args, {Event}) => {
+			const ids = args.modules.map(inflateId)
+			const events = await Event.find().where('_id').in(ids)
+			return events.map(gqlEvent)
 		}
 	},
 	Mutation:{

@@ -71,6 +71,10 @@ type Query {
 		period: String
 		lessons: Int
 	): [Module]!
+	# Resolve module ids
+	resolveModules(
+		modules: [ID]
+	): [Module]!
 
 	# Return event by _id
 	event(_id:ID!): Event
@@ -87,6 +91,10 @@ type Query {
 		author_id: ID
 		date: String
 	):  [Event]!
+	# Resolve event ids
+	resolveEvents(
+		events: [ID]
+	): [Event]!
 
 	# Return user by _id and/or student_id
 	user(
@@ -109,6 +117,10 @@ type Query {
 	# Return all timetables
 	timetables:[Timetable]!
 
+	# Resolve module ids
+	resolveTimetables(
+		timetables: [ID]
+	): [Timetable]!
 }
 
 type Mutation {

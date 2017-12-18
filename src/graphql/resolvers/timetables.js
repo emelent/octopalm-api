@@ -26,6 +26,12 @@ export default {
 		timetables: async(parent, args, {Timetable}) => {
 			const timetables = await Timetable.find()
 			return timetables.map(gqlTimetable)
+		},
+
+		resolveTimetables: async(parent, args, {Timetable}) => {
+			const ids = args.modules.map(inflateId)
+			const timetables = await Timetable.find().where('_id').in(ids)
+			return timetables.map(gqlTimetable)
 		}
 	},
 
